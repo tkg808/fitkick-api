@@ -127,12 +127,7 @@ STATIC_ROOT=os.path.join(BASE_DIR, "static/")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "https://localhost:8000",
-    "https://127.0.0.1:8000",
-    "https://fitkick-api.herokuapp.com",
-
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
