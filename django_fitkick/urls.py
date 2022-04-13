@@ -22,4 +22,6 @@ urlpatterns = [
     path('api-auth', include('rest_framework.urls', namespace = 'rest_framework')),
     # Refers to urls.py in users app.
     path('', include('users.urls')),
+    # Refers to urls.py in fitkick app.
+    path('', include('fitkick.urls')),
 ]
