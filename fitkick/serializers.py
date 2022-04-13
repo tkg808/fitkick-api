@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Workout, Exercise
 
-class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
+class ExerciseSerializer(serializers.ModelSerializer):
   exercise_url = serializers.ModelSerializer.serializer_url_field(
     view_name = 'exercise_detail',
   )
@@ -15,13 +15,24 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
     fields = ('id', 'name', 'notes', 'exercise_url', 'owner')
 
 
+# Handles how exercises render in workouts.
+class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
+
+    class Meta:
+        model = Exercise
+
+    def to_representation(self, value):
+        return value.name
+
+
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
   workout_url = serializers.ModelSerializer.serializer_url_field(
     view_name = 'workout_detail',
   )
   
-  exercises = ExerciseSerializer(
+  exercises = NestedExerciseSerializer(
     many = True,
+    queryset = Exercise.objects.all(),
   )
 
   owner = serializers.ReadOnlyField(
