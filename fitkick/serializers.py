@@ -15,14 +15,33 @@ class ExerciseSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'notes', 'exercise_url', 'owner')
 
 
-# Handles how exercises render in workouts.
+# Handles how exercises are serialized in workouts.
 class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
 
-    class Meta:
-        model = Exercise
+  class Meta:
+    model = Exercise
+    fields = ('name')
 
-    def to_representation(self, value):
-        return value.name
+  # Only serializes the exercise's name.
+  def to_representation(self, obj):
+    return obj.name
+
+  # Uses exercise name to find exercise and update list.
+  def to_internal_value(self, data):
+    
+    if not data:
+      raise serializers.ValidationError(
+        {'name': 'This field is required'}
+        )
+    if not (isinstance (data, str)):
+      raise serializers.ValidationError("Expecting exercise's name")
+
+    obj = Exercise.objects.filter(name=data).values()[0]
+
+    if not obj:
+      raise serializers.ValidationError("Not exercise with that name.")
+
+    return obj['id']
 
 
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
