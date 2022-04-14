@@ -16,32 +16,32 @@ class ExerciseSerializer(serializers.ModelSerializer):
 
 
 # Handles how exercises are serialized in workouts.
-class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
+# class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
 
-  class Meta:
-    model = Exercise
-    fields = ('name')
+#   class Meta:
+#     model = Exercise
+#     # fields = ('name')
 
-  # Only serializes the exercise's name.
-  def to_representation(self, obj):
-    return obj.name
+#   # Only serializes the exercise's name.
+#   def to_representation(self, obj):
+#     return obj.name
 
-  # Uses exercise name to find exercise and update list.
-  def to_internal_value(self, data):
+#   # # Uses exercise name to find exercise and update list.
+#   def to_internal_value(self, data):
     
-    if not data:
-      raise serializers.ValidationError(
-        {'name': 'This field is required'}
-        )
-    if not (isinstance (data, str)):
-      raise serializers.ValidationError("Expecting exercise's name")
+#     if not data:
+#       raise serializers.ValidationError(
+#         {'name': 'This field is required'}
+#         )
+#     if not (isinstance (data, str)):
+#       raise serializers.ValidationError("Expecting exercise's name")
 
-    obj = Exercise.objects.filter(name=data).values()[0]
+#     obj = Exercise.objects.filter(name=data).values()[0]
 
-    if not obj:
-      raise serializers.ValidationError("Not exercise with that name.")
+#     if not obj:
+#       raise serializers.ValidationError("Not exercise with that name.")
 
-    return obj['id']
+#     return obj['id']
 
 
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
@@ -49,9 +49,13 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
     view_name = 'workout_detail',
   )
   
-  exercises = NestedExerciseSerializer(
+  # exercises = NestedExerciseSerializer(
+  #   many = True,
+  #   queryset = Exercise.objects.all(),
+  # )
+
+  exercises = ExerciseSerializer(
     many = True,
-    queryset = Exercise.objects.all(),
   )
 
   owner = serializers.ReadOnlyField(
