@@ -1,18 +1,27 @@
 from rest_framework import serializers
 from .models import Workout, Exercise
 
+# class NestedExerciseInfoSerializer(serializers.ModelSerializer):
+#   exercise_info_owner = serializers.ReadOnlyField(
+#     source = 'exercise_owner.username',
+#   )
+
+#   class Meta:
+#     model = ExerciseInfo
+
+
 class ExerciseSerializer(serializers.ModelSerializer):
   exercise_url = serializers.ModelSerializer.serializer_url_field(
     view_name = 'exercise_detail',
   )
     
-  owner = serializers.ReadOnlyField(
-    source = 'owner.username',
+  exercise_owner = serializers.ReadOnlyField(
+    source = 'exercise_owner.username',
   )
 
   class Meta:
     model = Exercise
-    fields = ('id', 'name', 'exercise_type', 'notes', 'exercise_url', 'owner')
+    fields = ('id', 'name', 'exercise_type', 'primary_muscles', 'secondary_muscles', 'exercise_url', 'exercise_owner', 'sets', 'notes', 'exercise_info_owner')
 
 
 # Handles how exercises are serialized in workouts.
@@ -48,28 +57,18 @@ class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
 
 
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
-  # def update(self, instance, validated_data):
-  #   instance.name = validated_data.get('name', instance.name)
-  #   instance.notes = validated_data.get('notes', instance.notes)
-  #   instance.save()
-  #   return instance
-
   workout_url = serializers.ModelSerializer.serializer_url_field(
     view_name = 'workout_detail',
+  )
+  
+  owner = serializers.ReadOnlyField(
+    source = 'owner.username',
   )
   
   exercises = NestedExerciseSerializer(
     many = True,
     required = False,
     queryset = Exercise.objects.all(),
-  )
-
-  # exercises = ExerciseSerializer(
-  #   many = True,
-  # )
-
-  owner = serializers.ReadOnlyField(
-    source = 'owner.username',
   )
 
   class Meta:
