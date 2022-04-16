@@ -1,13 +1,23 @@
 from rest_framework import serializers
-from .models import Workout, Exercise
+from .models import Workout, Exercise, ExerciseInfo
 
-# class NestedExerciseInfoSerializer(serializers.ModelSerializer):
-#   exercise_info_owner = serializers.ReadOnlyField(
-#     source = 'exercise_owner.username',
-#   )
 
-#   class Meta:
-#     model = ExerciseInfo
+class ExerciseInfoSerializer(serializers.ModelSerializer):
+  owner = serializers.ReadOnlyField(
+    # source = "user.username",
+  )
+
+  exercise = serializers.ReadOnlyField(
+    # source = 'exercise.name',
+  )
+
+  notes = serializers.CharField(
+    default = "",
+  )
+
+  class Meta:
+    model = ExerciseInfo
+    fields = ('id', 'notes', 'exercise', 'owner')
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
@@ -15,16 +25,35 @@ class ExerciseSerializer(serializers.ModelSerializer):
     view_name = 'exercise_detail',
   )
     
-  exercise_owner = serializers.ReadOnlyField(
-    source = 'exercise_owner.username',
+  owner = serializers.ReadOnlyField(
+    source = 'owner.username',
+  )
+
+  exercise_info = ExerciseInfoSerializer(
+    required = False,
+    # queryset = ExerciseInfo.objects.all(),
   )
 
   class Meta:
     model = Exercise
-    fields = ('id', 'name', 'exercise_type', 'primary_muscles', 'secondary_muscles', 'exercise_url', 'exercise_owner', 'sets', 'notes', 'exercise_info_owner')
+    fields = ('id', 'name', 'exercise_type', 'primary_muscles', 'secondary_muscles', 'exercise_url', 'owner', 'exercise_info')
+
+  def create(self, validated_data):
+    # Separate model data.
+    exercise_info_data = validated_data.pop('exercise_info')
+    # Create Exercise with validated_data.
+    exercise_data = Exercise.objects.create(**validated_data)
+    # Create ExerciseInfo with popped validated_data.
+    # Have to specify exercise_info_owner.
+    ExerciseInfo.objects.create(
+      # Connects new ExerciseInfo to the recently created Exercise.
+      exercise = exercise_data,
+      owner = validated_data['owner'],
+      **exercise_info_data)
+    return exercise_data
 
 
-# Handles how exercises are serialized in workouts.
+# Lets me see a list of all exercises.
 class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
 
   class Meta:

@@ -1,31 +1,27 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
-# Allows user ownership over these fields.
+# Allows notes to be specific to the user.
 class ExerciseInfo(models.Model):
   notes = models.TextField(blank = True)
-  # Stores reps and weights as pairs.
-  # Set number for reps/weights handled in UI.
-  sets = ArrayField(
-    ArrayField(
-      models.PositiveSmallIntegerField(),
-      size = 2,
-    ))
 
-  exercise_info_owner = models.ForeignKey(
+  owner = models.ForeignKey(
     'users.User', 
     related_name = 'exercise_infos',
     on_delete = models.CASCADE,
     )
 
-  # Inherited so it won't generate it's own table.
+  exercise = models.ForeignKey(
+    'Exercise',
+    related_name = 'exercise_info',
+    on_delete = models.CASCADE,
+  )
+
   class Meta:
-    abstract = True
+    # Acts as a surrogate primary key column.
+    unique_together = (("owner", "exercise"),)
 
-  def __str__(self):
-    return self.name
-
-class Exercise(ExerciseInfo):
+class Exercise(models.Model):
   TYPE_CHOICES = (
     ('Aerobic', 'Aerobic'),
     ('Anaerobic', 'Anaerobic'),
@@ -59,9 +55,8 @@ class Exercise(ExerciseInfo):
     choices = MUSCLE_CHOICES,
     default = '',
   )
-  notes = models.TextField(blank = True)
 
-  exercise_owner = models.ForeignKey(
+  owner = models.ForeignKey(
     'users.User', 
     related_name = 'exercises',
     on_delete = models.CASCADE,
