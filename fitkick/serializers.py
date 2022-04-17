@@ -115,14 +115,14 @@ class ExerciseSerializer(serializers.ModelSerializer):
     # Separate model data.
     exercise_info_data = validated_data.pop('exercise_info')
 
-    # 1 update Exercise instance => save
+    # Update Exercise instance => save
     instance.name = validated_data.get('name', instance.name)
     instance.exercise_type = validated_data.get('exercise_type', instance.exercise_type)
     instance.primary_muscles = validated_data.get('primary_muscles', instance.primary_muscles)
     instance.secondary_muscles = validated_data.get('secondary_muscles', instance.secondary_muscles)
     instance.save()
   
-    # Creates if new, updates otherwise.
+    # Create if new.
     # Returns a tuple => data, boolean.
     # Boolean is True if created, False if fetched.
     exercise_info, created = ExerciseInfo.objects.get_or_create(
@@ -131,11 +131,21 @@ class ExerciseSerializer(serializers.ModelSerializer):
       exercise = instance.name,
       owner = instance.owner,
       # Fields to use if create is necessary.
-      defaults = {'notes': exercise_info_data[0][notes]}
+      defaults = {'notes': exercise_info_data['notes']}
+      )
+    
+    # Didn't create => now update.
+    if not created:
+      ExerciseInfo.objects.create(
+      # Connects new ExerciseInfo to the recently created Exercise.
+      exercise = exercise_info['exercise'],
+      # Field has to be a User instance.
+      owner = owner['owner'],
+      notes = exercise_info_data['notes'],
       )
 
-    # 5 return instance
-
+    # Return instance
+    return instance
 
 # Lets me see a list of all exercises.
 class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
