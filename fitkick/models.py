@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 # Allows notes to be specific to the user.
 class ExerciseInfo(models.Model):
-  notes = models.TextField(blank = True)
+  notes = models.TextField(null = True)
 
   owner = models.ForeignKey(
     'users.User', 
@@ -11,7 +11,13 @@ class ExerciseInfo(models.Model):
     on_delete = models.CASCADE,
     )
 
-  exercise = models.ForeignKey(
+  # exercise = models.ForeignKey(
+  #   'Exercise',
+  #   related_name = 'exercise_info',
+  #   on_delete = models.CASCADE,
+  # )
+
+  exercise = models.OneToOneField(
     'Exercise',
     related_name = 'exercise_info',
     on_delete = models.CASCADE,

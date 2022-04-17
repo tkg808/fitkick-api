@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
-from .models import Workout, Exercise
-from .serializers import WorkoutSerializer, ExerciseSerializer
+from .models import Workout, Exercise, ExerciseInfo
+from .serializers import WorkoutSerializer, ExerciseSerializer, ExerciseInfoSerializer
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -38,3 +38,19 @@ class ExerciseDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Exercise.objects.all()
   serializer_class = ExerciseSerializer
   permission_classes = [IsOwnerOrReadOnly]
+
+
+# ExerciseInfo => GET, POST
+# class ExerciseInfoList(generics.ListCreateAPIView):
+#   queryset = ExerciseInfo.objects.all()
+#   serializer_class = ExerciseInfoSerializer
+#   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+#   def perform_create(self, serializer):
+#     serializer.save(owner = self.request.user)
+
+# # ExerciseInfo => SHOW, UPDATE
+# class ExerciseInfoDetail(generics.RetrieveUpdateDestroyAPIView):
+#   queryset = ExerciseInfo.objects.all()
+#   serializer_class = ExerciseInfoSerializer
+#   permission_classes = [IsOwnerOrReadOnly]
