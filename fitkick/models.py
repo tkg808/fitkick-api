@@ -43,16 +43,19 @@ class Exercise(models.Model):
   )
 
   name = models.CharField(max_length = 50)
+
   exercise_type = models.CharField(
     max_length = 10,
     choices = TYPE_CHOICES,
     default = '',
     )
+    
   primary_muscles = models.CharField(
     max_length = 10,
     choices = MUSCLE_CHOICES,
     default = '',
   )
+
   secondary_muscles = models.CharField(
     max_length = 10,
     choices = MUSCLE_CHOICES,
@@ -64,9 +67,6 @@ class Exercise(models.Model):
     related_name = 'exercises',
     on_delete = models.CASCADE,
     )
-
-  def __str__(self):
-    return self.name
 
 
 class Workout(models.Model):
@@ -84,8 +84,5 @@ class Workout(models.Model):
     related_name = 'workouts',
     on_delete = models.CASCADE,
     )
-
-  def __str__(self):
-    return self.name
 
 

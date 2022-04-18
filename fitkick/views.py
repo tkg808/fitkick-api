@@ -42,7 +42,6 @@ class ExerciseDetail(generics.RetrieveUpdateDestroyAPIView):
 
 # ExerciseInfo => GET, POST
 class ExerciseInfoList(generics.ListCreateAPIView):
-  # queryset = ExerciseInfo.objects.get_queryset()
   serializer_class = ExerciseInfoSerializer
   permission_classes = [permissions.IsAuthenticated]
 

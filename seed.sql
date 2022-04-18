@@ -44,6 +44,29 @@ INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 20, 
 INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 21, 1);
 INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 22, 1);
 
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 1, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 2, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 3, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 4, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 5, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 6, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 7, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 8, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 9, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 10, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 11, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 12, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 13, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 14, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 15, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 16, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 17, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 18, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 19, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 20, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 21, 2);
+INSERT INTO fitkick_exerciseinfo (notes, exercise_id, owner_id) VALUES ('', 22, 2);
+
 
 INSERT INTO fitkick_workout (name, notes, owner_id) VALUES ('Back Day', '', 1);
 INSERT INTO fitkick_workout (name, notes, owner_id) VALUES ('Chest Day', '', 1);
@@ -56,3 +79,4 @@ INSERT INTO fitkick_workout_exercises (workout_id, exercise_id) VALUES (2, 5);
 INSERT INTO fitkick_workout_exercises (workout_id, exercise_id) VALUES (2, 6);
 INSERT INTO fitkick_workout_exercises (workout_id, exercise_id) VALUES (2, 8);
 INSERT INTO fitkick_workout_exercises (workout_id, exercise_id) VALUES (2, 9);
+INSERT INTO fitkick_workout_exercises (workout_id, exercise_id) VALUES (2, 1);
