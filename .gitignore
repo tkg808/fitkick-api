@@ -21,3 +21,6 @@ Pipfile.lock
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+
+seed.sql
+settings.sql
