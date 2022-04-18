@@ -5,27 +5,24 @@ from django.contrib.postgres.fields import ArrayField
 class ExerciseInfo(models.Model):
   notes = models.TextField(null = True)
 
+  # One User, Many ExerciseInfo.
   owner = models.ForeignKey(
     'users.User', 
     related_name = 'exercise_infos',
     on_delete = models.CASCADE,
     )
 
-  # exercise = models.ForeignKey(
-  #   'Exercise',
-  #   related_name = 'exercise_info',
-  #   on_delete = models.CASCADE,
-  # )
-
-  exercise = models.OneToOneField(
+  # One Exercise, Many ExerciseInfo.
+  exercise = models.ForeignKey(
     'Exercise',
-    related_name = 'exercise_info',
+    related_name = 'exercise_infos',
     on_delete = models.CASCADE,
   )
 
   class Meta:
     # Acts as a surrogate primary key column.
     unique_together = (("owner", "exercise"),)
+
 
 class Exercise(models.Model):
   TYPE_CHOICES = (

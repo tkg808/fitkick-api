@@ -41,16 +41,20 @@ class ExerciseDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 # ExerciseInfo => GET, POST
-# class ExerciseInfoList(generics.ListCreateAPIView):
-#   queryset = ExerciseInfo.objects.all()
-#   serializer_class = ExerciseInfoSerializer
-#   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class ExerciseInfoList(generics.ListCreateAPIView):
+  # queryset = ExerciseInfo.objects.get_queryset()
+  serializer_class = ExerciseInfoSerializer
+  permission_classes = [permissions.IsAuthenticated]
 
-#   def perform_create(self, serializer):
-#     serializer.save(owner = self.request.user)
+  def perform_create(self, serializer):
+    serializer.save(owner = self.request.user)
 
-# # ExerciseInfo => SHOW, UPDATE
-# class ExerciseInfoDetail(generics.RetrieveUpdateDestroyAPIView):
-#   queryset = ExerciseInfo.objects.all()
-#   serializer_class = ExerciseInfoSerializer
-#   permission_classes = [IsOwnerOrReadOnly]
+  # Only gets the user's exercise info
+  def get_queryset(self):
+    return ExerciseInfo.objects.filter(owner = self.request.user)
+
+# ExerciseInfo => SHOW, UPDATE
+class ExerciseInfoDetail(generics.RetrieveUpdateDestroyAPIView):
+  queryset = ExerciseInfo.objects.all()
+  serializer_class = ExerciseInfoSerializer
+  permission_classes = [IsOwnerOrReadOnly]
