@@ -7,7 +7,15 @@ class ExerciseInfoSerializer(serializers.ModelSerializer):
     view_name = 'exercise_info_detail',
   )
 
-  notes = serializers.CharField(allow_blank = True)
+  notes = serializers.CharField(
+    allow_blank = True,
+    required = False,
+    allow_null = True,
+    )
+
+  exercise_id = serializers.IntegerField(
+    required = True,
+  )
 
   class Meta:
     model = ExerciseInfo
