@@ -17,9 +17,13 @@ class ExerciseInfoSerializer(serializers.ModelSerializer):
     required = True,
   )
 
+  exercise_name = serializers.ReadOnlyField(
+    source = 'exercise.name',
+  )
+
   class Meta:
     model = ExerciseInfo
-    fields = ('id', 'notes', 'exercise_id', 'owner_id', 'exercise_info_url')
+    fields = ('id', 'notes', 'exercise_id', 'exercise_name', 'owner_id', 'exercise_info_url')
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
@@ -41,7 +45,7 @@ class NestedExerciseSerializer(serializers.PrimaryKeyRelatedField):
 
   class Meta:
     model = Exercise
-    fields = ('name')
+    # fields = ('name')
 
   # Only serializes the exercise's name.
   def to_representation(self, obj):

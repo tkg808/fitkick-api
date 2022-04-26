@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, views, permissions
 from .models import Workout, Exercise, ExerciseInfo
 from .serializers import WorkoutSerializer, ExerciseSerializer, ExerciseInfoSerializer
 from .permissions import IsOwnerOrReadOnly
