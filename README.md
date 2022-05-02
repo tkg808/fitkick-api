@@ -78,12 +78,14 @@ You can submit an issue on the git repository detailing your suggestion.
 * One to many relationship with Workout.
 * One to many relationship with Exercise.
 * One to many relationship with ExerciseInfo.
+* One to many relationship with Event
 
 ### Workout
 
 * Stores a collection of exercises.
 * Many to one relationship with User.
 * Many to many relationship with Exercise.
+* One to many relationship with Event
 
 ### Exercise
 
@@ -97,6 +99,11 @@ You can submit an issue on the git repository detailing your suggestion.
 * Stores user specific information for an exercise.
 * Many to one relationship with User.
 * Many to one relationship with Exercise.
+
+### Event
+* Stores an instance of a workout on a day.
+* Many to one relationship with Workout
+* Many to one relationship with User.
 
 ## User Stories
 
