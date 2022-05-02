@@ -19,4 +19,9 @@ urlpatterns = [
     path('exercise-infos/', views.ExerciseInfoList.as_view(), name = 'exercise_info_list'),
     # # PUT localhost:8000/exercise-infos/:id
     path('exercise-infos/<int:pk>', views.ExerciseInfoDetail.as_view(), name = 'exercise_info_detail'),
+    # GET localhost:8000/events
+    # POST localhost:8000/events
+    path('events/', views.EventList.as_view(), name = 'event_list'),
+    # # PUT localhost:8000/events/:id
+    path('events/<int:pk>', views.EventDetail.as_view(), name = 'event_detail'),
 ]

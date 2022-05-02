@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from datetime import date
 
 # Allows notes to be specific to the user.
 class ExerciseInfo(models.Model):
@@ -86,3 +87,21 @@ class Workout(models.Model):
     )
 
 
+class Event(models.Model):
+  title = models.CharField(max_length = 50, blank = False)
+  
+  # One Workout, Many Events
+  workout = models.ForeignKey(
+    Workout,
+    related_name = 'events',
+    on_delete = models.CASCADE,
+  )
+
+  # One Owner, Many Events
+  owner = models.ForeignKey(
+    'users.User',
+    related_name = 'events',
+    on_delete = models.CASCADE,
+  )
+
+  date = models.DateField()

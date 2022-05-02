@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Workout, Exercise, ExerciseInfo
+from .models import Workout, Exercise, ExerciseInfo, Event
 
 
 class ExerciseInfoSerializer(serializers.ModelSerializer):
@@ -90,3 +90,25 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = Workout
     fields = ('id', 'name', 'notes', 'exercises', 'workout_url', 'owner')
+
+
+class EventSerializer(serializers.ModelSerializer):
+  event_url = serializers.ModelSerializer.serializer_url_field(
+    view_name = 'event_detail',
+  )
+
+  workout_id = serializers.IntegerField(
+    required = True,
+  )
+
+  workout_name = serializers.ReadOnlyField(
+    source = 'workout.name',
+  )
+
+  owner = serializers.ReadOnlyField(
+    source = 'owner.username',
+  )
+
+  class Meta:
+    model = Event
+    fields = ('id', 'title', 'workout_id', 'workout_name', 'date', 'event_url', 'owner')
