@@ -1,1 +1,1 @@
-web: gunicorn django_fitkick.wsgi
+web: gunicorn "django_fitkick.wsgi"
